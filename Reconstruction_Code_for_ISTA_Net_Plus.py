@@ -19,6 +19,7 @@ import glob
 from time import time
 from PIL import Image
 import math
+import imageio
 
 
 CS_ratio = 25    # 1, 4, 10, 25, 30,, 40, 50
@@ -77,7 +78,8 @@ Test_Img = './Test_Image'
 
 def imread_CS_py(imgName):
     block_size = 33
-    Iorg = np.array(Image.open(imgName), dtype='float32')
+    Iorg = imageio.imread(imgName)
+    Iorg = np.array(Iorg, dtype='float32')
     [row, col] = Iorg.shape
     row_pad = block_size-np.mod(row,block_size)
     col_pad = block_size-np.mod(col,block_size)
@@ -126,7 +128,7 @@ def psnr(img1, img2):
     return 20 * math.log10(PIXEL_MAX / math.sqrt(mse))
 
 
-filepaths = glob.glob(Test_Img + '/*.tif')
+filepaths = glob.glob(Test_Img + '/*.tiff')
 
 
 
